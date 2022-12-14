@@ -17,10 +17,20 @@ const checkUser = (uid) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const registerUser = (userInfo) => new Promise((resolve, reject) => {
+const registerUser = (user, userInfo) => new Promise((resolve, reject) => {
+  const userObj = {
+    uid: user.uid,
+    first_name: userInfo?.firstName,
+    last_name: userInfo?.lastName,
+    bio: userInfo?.bio,
+    profile_image_url: userInfo?.profileImageUrl,
+    email: userInfo?.email,
+    created_on: new Date(new Date().setDate(new Date().getDate())).toISOString().substring(0, 10),
+    active: true,
+  };
   fetch(`${clientCredentials.databaseURL}/register`, {
     method: 'POST',
-    body: JSON.stringify(userInfo),
+    body: JSON.stringify(userObj),
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
