@@ -22,4 +22,23 @@ const getSingleComment = (commentId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export { getAllComments, getSingleComment };
+const createComment = (user, comment) => new Promise((resolve, reject) => {
+  const commentObj = {
+    post_id: comment.postId,
+    author_id: comment.authorId,
+    content: comment.content,
+    created_on: comment.createdOn,
+    user_id: user.uid,
+  };
+  fetch(`${clientCredentials.databaseURL}/comments`, {
+    method: 'POST',
+    body: JSON.stringify(commentObj),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
+});
+
+export { getAllComments, getSingleComment, createComment };
