@@ -1,11 +1,16 @@
+// import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
-
-// Change to show all posts
+// import { getPosts } from '../utils/data/postData';
 
 function Home() {
   const { user } = useAuth();
+  // const [posts, setPosts] = useState([]);
+
+  // useEffect(() => {
+  //   getPosts().then(setPosts);
+  // }, []);
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
