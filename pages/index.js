@@ -2,6 +2,8 @@ import { Button } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
 
+// Change to show all posts
+
 function Home() {
   const { user } = useAuth();
   return (
