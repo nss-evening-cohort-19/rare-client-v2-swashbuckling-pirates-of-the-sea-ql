@@ -1,15 +1,15 @@
 // API calls for categories
 /* eslint-disable import/prefer-default-export */
-export const getCategories = () => fetch('http://localhost:8088/categories')
+export const getCategories = () => fetch('http://localhost:8000/categories')
   .then((res) => res.json());
 
 // export const getCategoriesBySearchTerm = (searchTerm) => fetch(`http://localhost:8088/categories?search=${searchTerm}`)
 //   .then((res) => res.json());
 
-export const getCategoriedById = (id) => fetch(`http://localhost:8088/categories/${id}`)
+export const getCategoriedById = (id) => fetch(`http://localhost:8000/categories/${id}`)
   .then((res) => res.json());
 
-export const addCategory = (category) => fetch('http://localhost:8088/categories', {
+export const addCategory = (category) => fetch('http://localhost:8000/categories', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
@@ -17,7 +17,7 @@ export const addCategory = (category) => fetch('http://localhost:8088/categories
   body: JSON.stringify(category),
 });
 
-export const updateCategory = (category) => fetch(`http://localhost:8088/categories/${category.id}`, {
+export const updateCategory = (category) => fetch(`http://localhost:8000/categories/${category.id}`, {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -25,6 +25,6 @@ export const updateCategory = (category) => fetch(`http://localhost:8088/categor
   body: JSON.stringify(category),
 });
 
-export const deleteCategory = (categoryId) => fetch(`http://localhost:8088/categories/${categoryId}`, {
+export const deleteCategory = (categoryId) => fetch(`http://localhost:8000/categories/${categoryId}`, {
   method: 'DELETE',
 });
