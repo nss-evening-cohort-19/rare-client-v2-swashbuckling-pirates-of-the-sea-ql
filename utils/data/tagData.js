@@ -1,26 +1,49 @@
 // API calls for tags
-export const getTags = () => fetch('http://localhost:8088/tags')
-  .then((res) => res.json());
+/* eslint-disable import/prefer-default-export */
+import { clientCredentials } from '../client';
 
-export const getTagsById = (id) => fetch(`http://localhost:8088/tags/${id}`)
-  .then((res) => res.json());
+const dbUrl = clientCredentials.databaseURL;
 
-export const addTag = (tag) => fetch('http://localhost:8088/tags', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(tag),
+export const getTags = (tagId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/tags/${tagId}`).then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
 });
 
-export const updateTag = (tag) => fetch(`http://localhost:8088/tags/${tag.id}`, {
-  method: 'PUT',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(tag),
+export const addTag = (tag) => new Promise((resolve, reject) => {
+  const tagObj = {
+    label: tag.label,
+  };
+  fetch(`${dbUrl}/tags`, {
+    method: 'POST',
+    body: JSON.stringify(tagObj),
+    headers: {
+      'Content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((err) => reject(err));
 });
 
-export const deleteTag = (tagId) => fetch(`http://localhost:8088/tags/${tagId}`, {
-  method: 'DELETE',
+export const updateTag = (tag, tagId) => ((resolve, reject) => {
+  const tagObj = {
+    label: tag.label,
+  };
+  fetch(`${dbUrl}/tags/${tagId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(tagObj),
+  })
+    .then((response) => resolve(response))
+    .catch((err) => reject(err));
+});
+
+export const deleteTag = (tagId) => ((resolve, reject) => {
+  fetch(`${dbUrl}/tags/${tagId}`, {
+    method: 'DELETE',
+  })
+    .then(resolve)
+    .catch(reject);
 });
