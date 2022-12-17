@@ -7,29 +7,51 @@ import {
   Nav,
   Button,
 } from 'react-bootstrap';
+import Image from 'next/image';
+import AddIcon from '@mui/icons-material/Add';
 import { signOut } from '../utils/auth';
+import Logo from '../public/rare.jpeg';
 
 export default function NavBar() {
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
+
         <Link passHref href="/">
-          <Navbar.Brand>CHANGE ME</Navbar.Brand>
+          <Navbar.Brand>
+            <Image src={Logo} height="50px" width="50px" className="navBarLogo" />
+          </Navbar.Brand>
         </Link>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
+
+            {/* To add My Posts page: */}
             <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
+              <Nav.Link>My Posts</Nav.Link>
             </Link>
-            <Link passHref href="/delete-me">
-              <Nav.Link>Delete Me</Nav.Link>
+
+            <Link passHref href="/categories">
+              <Nav.Link>Category Manager</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>
-              Sign Out
-            </Button>
+
+            <Link passHref href="/tags">
+              <Nav.Link>Tag Manager</Nav.Link>
+            </Link>
+
           </Nav>
+
+          <div className="addIcon">
+            <Link passHref href="/posts/new">
+              <AddIcon />
+            </Link>
+          </div>
+
+          <Button variant="danger" onClick={signOut}>
+            Sign Out
+          </Button>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

@@ -20,3 +20,9 @@ a {
 body {
   background-color: #88effd;
 }
+
+/* Add icon on navbar */
+.addIcon {
+  background-color: white;
+  margin-right: 20px;
+}
