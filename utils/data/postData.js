@@ -30,7 +30,7 @@ const createPost = (post, user) => new Promise((resolve, reject) => {
     category_id: post.categoryId,
     title: post.title,
     content: post.content,
-    publication_date: post.createdOn,
+    publication_date: Date.now(),
     image_url: post.imageUrl,
   };
   fetch(`${dbUrl}/posts`, {
