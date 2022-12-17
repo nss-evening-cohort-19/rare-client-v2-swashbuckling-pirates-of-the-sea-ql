@@ -32,11 +32,11 @@ function CategoryForm({ obj }) {
     e.preventDefault();
     if (obj.id) {
       updateCategory(categoryFormInput)
-        .then(() => router.push('/category'));
+        .then(() => router.push('/'));
     } else {
       const payload = { ...categoryFormInput };
       addCategory(payload).then(() => {
-        router.push('/category');
+        router.push('/');
       });
     }
   };
