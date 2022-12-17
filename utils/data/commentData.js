@@ -23,13 +23,13 @@ const getSingleComment = (commentId) => new Promise((resolve, reject) => {
 });
 
 const createComment = (user, comment) => new Promise((resolve, reject) => {
+  console.warn('payload v1', comment);
   const commentObj = {
     post_id: comment.postId,
-    author_id: comment.authorId,
+    author_id: user.id,
     content: comment.content,
-    created_on: comment.createdOn,
-    user_id: user.uid,
   };
+  console.warn('commentObj', commentObj);
   fetch(`${clientCredentials.databaseURL}/comments`, {
     method: 'POST',
     body: JSON.stringify(commentObj),
@@ -41,4 +41,33 @@ const createComment = (user, comment) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export { getAllComments, getSingleComment, createComment };
+const deleteComment = (commentId) => ((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/comments/${commentId}`, {
+    method: 'DELETE',
+  })
+    .then(resolve)
+    .catch(reject);
+});
+
+const updateComment = (user, commentId, comment) => new Promise((resolve, reject) => {
+  const commentObj = {
+    post_id: comment.postId,
+    author_id: comment.authorId,
+    content: comment.content,
+    created_on: comment.createdOn,
+    user_id: user.uid,
+  };
+  fetch(`${clientCredentials.databaseURL}/comments/${commentId}`, {
+    method: 'PUT',
+    body: JSON.stringify(commentObj),
+    headers: {
+      'content-type': 'application/json',
+    },
+  })
+    .then((response) => resolve(response.json()))
+    .catch((error) => reject(error));
+});
+
+export {
+  getAllComments, getSingleComment, createComment, deleteComment, updateComment,
+};
