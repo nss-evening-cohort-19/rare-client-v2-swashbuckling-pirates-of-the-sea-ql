@@ -1,17 +1,18 @@
-// import { useRouter } from 'next/router';
-// import React, { useEffect, useState } from 'react';
-// import { getSinglePost } from '../../utils/data/postData';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
+import PostDetails from '../../components/posts/PostDetails';
+import { getSinglePost } from '../../utils/data/postData';
 
-// export default function ViewSinglePost() {
-//   const [postDetails, setPostDetails] = useState({});
-//   const router = useRouter();
-//   const { postId } = router.query;
+export default function ViewSinglePost() {
+  const [postDetails, setPostDetails] = useState({});
+  const router = useRouter();
+  const { postId } = router.query;
 
-//   useEffect(() => {
-//     getSinglePost(postId).then(setPostDetails);
-//   }, [postId]);
+  useEffect(() => {
+    getSinglePost(postId).then(setPostDetails);
+  }, [postId]);
 
-//   return (
-//     <div> ViewSinglePost</div>
-//   );
-// }
+  return (
+    <PostDetails postObj={postDetails} />
+  );
+}

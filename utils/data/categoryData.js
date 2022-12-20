@@ -4,8 +4,8 @@ import { clientCredentials } from '../client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-export const getCategories = (categoryId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/categories/${categoryId}`).then((response) => response.json())
+export const getCategories = () => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/categories`).then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
