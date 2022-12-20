@@ -24,27 +24,27 @@ const getSinglePost = (postId) => new Promise((resolve, reject) => {
     }).catch((error) => reject(error));
 });
 
-const createPost = (post, user) => new Promise((resolve, reject) => {
-  const postObj = {
-    user_id: user.uid,
-    category_id: post.categoryId,
-    title: post.title,
-    content: post.content,
-    publication_date: post.createdOn,
-    image_url: post.imageUrl,
+const createPost = (postObj, user) => new Promise((resolve, reject) => {
+  const post = {
+    category_id: Number(postObj.categoryId),
+    title: postObj.title,
+    content: postObj.content,
+    publication_date: new Date().toISOString().split('T')[0],
+    image_url: postObj.imageUrl,
+    user_id: user.id,
   };
   fetch(`${dbUrl}/posts`, {
     method: 'POST',
-    body: JSON.stringify(postObj),
+    body: JSON.stringify(post),
     headers: {
       'Content-Type': 'application/json',
     },
   })
     .then((response) => resolve(response.json()))
-    .catch((err) => reject(err));
+    .catch((error) => reject(error));
 });
 
-const deletePost = (postId) => ((resolve, reject) => {
+const deletePost = (postId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/posts/${postId}`, {
     method: 'DELETE',
   })
@@ -52,14 +52,14 @@ const deletePost = (postId) => ((resolve, reject) => {
     .catch(reject);
 });
 
-const updatePost = (user, postId, post) => ((resolve, reject) => {
+const updatePost = (user, post, postId) => new Promise((resolve, reject) => {
   const postObj = {
-    user_id: user.uid,
-    category_id: post.categoryId,
+    category_id: Number(post.categoryId),
     title: post.title,
     content: post.content,
     publication_date: post.createdOn,
     image_url: post.imageUrl,
+    user_id: user.uid,
   };
   fetch(`${dbUrl}/posts/${postId}`, {
     method: 'PUT',
@@ -67,7 +67,7 @@ const updatePost = (user, postId, post) => ((resolve, reject) => {
     headers: { 'Content-Type': 'application/json' },
   })
     .then((response) => resolve(response))
-    .catch((err) => reject(err));
+    .catch((error) => reject(error));
 });
 
 export {
