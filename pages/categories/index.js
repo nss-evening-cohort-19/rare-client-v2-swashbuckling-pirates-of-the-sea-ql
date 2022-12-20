@@ -1,10 +1,7 @@
 import { Link } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
-// import PropTypes from 'prop-types';
 import CategoryForm from '../../components/categories/CategoryForm';
-// import { signOut } from '../utils/auth';
-// import { useAuth } from '../utils/context/authContext';
 import { deleteCategory, getCategories } from '../../utils/data/categoryData';
 
 function CategoriesPage() {
@@ -47,12 +44,5 @@ function CategoriesPage() {
     </>
   );
 }
-
-// CategoriesPage.propTypes = {
-//   categoryObj: PropTypes.shape({
-//     id: PropTypes.string,
-//     label: PropTypes.string,
-//   }).isRequired,
-// };
 
 export default CategoriesPage;

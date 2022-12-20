@@ -1,27 +1,27 @@
-import React, {
-  useState, useEffect,
-} from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useRouter } from 'next/router';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
-import { addTag, updateTag } from '../../utils/data/tagData';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import { addTag, getTags } from '../../utils/data/tagData';
 
 const initialState = {
   label: '',
-  id: '',
 };
 
+// eslint-disable-next-line react/prop-types
 function TagForm({ obj }) {
-  const [tagFormInput, setTagFormInput] = useState(initialState);
-  const router = useRouter();
+  const [formInput, setFormInput] = useState(initialState);
+  const [tag, setTag] = useState([]);
 
   useEffect(() => {
-    if (obj.id) setTagFormInput(obj);
+    getTags().then(setTag);
+    console.warn(tag);
+    if (obj.id) setFormInput(obj);
   }, [obj]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setTagFormInput((prevState) => ({
+    setFormInput((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -29,24 +29,31 @@ function TagForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (obj.id) {
-      updateTag(tagFormInput)
-        .then(() => router.push('/tags'));
-    } else {
-      const payload = { ...tagFormInput };
-      addTag(payload).then(() => {
-        router.push('/tags');
-      });
-    }
+    const payload = {
+      ...formInput,
+    };
+    console.warn(payload);
+    addTag(payload).then(() => {
+      setFormInput(initialState);
+    });
   };
 
   return (
-    <Form className="form-floating" onSubmit={handleSubmit}>
-      <h2 className="text-black mt-5">{obj.id ? 'Update' : 'Create'} Tag</h2>
-      <FloatingLabel controlId="floatingInput1" label="Label" className="mb-3">
-        <Form.Control type="text" placeholder="Label" name="label" value={tagFormInput.label} onChange={handleChange} required />
-      </FloatingLabel>
-      <Button type="submit">{obj.id ? 'Update' : 'Create'} Tag</Button>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group className="mb-3">
+        <Form.Label>Create a new category</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Add text"
+          name="label"
+          value={formInput.label}
+          onChange={handleChange}
+          required
+        />
+      </Form.Group>
+      <Button variant="primary" type="submit">
+        Create
+      </Button>
     </Form>
   );
 }
@@ -58,7 +65,6 @@ TagForm.propTypes = {
   }),
 };
 
-// DEFAULT PROPS
 TagForm.defaultProps = {
   obj: initialState,
 };
