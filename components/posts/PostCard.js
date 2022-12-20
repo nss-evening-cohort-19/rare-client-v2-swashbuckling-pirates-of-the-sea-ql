@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/router';
 import { Button } from 'react-bootstrap';
+import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../utils/data/postData';
 
@@ -18,7 +19,9 @@ export default function PostCard({
   };
   return (
     <Card>
-      <Card.Header>Posted on: {createdOn} by: {userId?.first_name} {userId?.last_name}</Card.Header>
+      <Link passHref href={`users/${userId.id}`}>
+        <Card.Header>Posted on: {createdOn} by: {userId?.first_name} {userId?.last_name}</Card.Header>
+      </Link>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Img src={imageUrl} />
@@ -48,6 +51,7 @@ PostCard.propTypes = {
     id: PropTypes.number,
     first_name: PropTypes.string,
     last_name: PropTypes.string,
+    uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
