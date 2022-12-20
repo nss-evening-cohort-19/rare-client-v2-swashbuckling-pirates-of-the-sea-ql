@@ -7,7 +7,7 @@ const getSingleUser = (userId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/users/${userId}`).then((response) => response.json())
     .then((data) => {
       resolve({
-        id: data.id,
+        id: Number(data.id),
         uid: data.uid,
         firstName: data.first_name,
         lastName: data.last_name,
@@ -20,7 +20,7 @@ const getSingleUser = (userId) => new Promise((resolve, reject) => {
     }).catch((error) => reject(error));
 });
 
-const updateUser = (userObj, userId) => ((resolve, reject) => {
+const updateUser = (userObj, userId) => new Promise((resolve, reject) => {
   const newUserObj = {
     first_name: userObj.firstName,
     last_name: userObj.lastName,
@@ -38,7 +38,7 @@ const updateUser = (userObj, userId) => ((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteUser = (userId) => ((resolve, reject) => {
+const deleteUser = (userId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/users/${userId}`, {
     method: 'DELETE',
   })
