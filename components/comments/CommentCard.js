@@ -17,7 +17,7 @@ function CommentCard({ commentObj, getAndSetComments }) {
   return (
     <Card.Body className="commentCard">
       <Card.Body>
-        { editToggle ? <CommentForm commentObj={commentObj} getAndSetComments={getAndSetComments} />
+        { editToggle ? <CommentForm handleToggle={handleToggle} commentObj={commentObj} getAndSetComments={getAndSetComments} />
           : <Card.Text>{ commentObj.content }</Card.Text>}
       </Card.Body>
       <div>

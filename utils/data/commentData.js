@@ -25,16 +25,8 @@ const getSingleComment = (commentId) => new Promise((resolve, reject) => {
 const getCommentsByPost = (postId) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/comments?post_id=${postId}`)
     .then((response) => response.json())
-    .then((data) => {
-      resolve({
-        id: data.id,
-        postId: data.post_id,
-        authorId: data.author_id,
-        content: data.content,
-        createdOn: data.created_on,
-      });
-    })
-    .catch((error) => reject(error));
+    .then(resolve)
+    .catch(reject);
 });
 
 const createComment = (user, comment) => new Promise((resolve, reject) => {

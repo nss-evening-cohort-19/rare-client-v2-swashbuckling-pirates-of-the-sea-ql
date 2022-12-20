@@ -12,7 +12,7 @@ const initialState = {
 
 function CommentForm({
   // eslint-disable-next-line react/prop-types
-  postId, commentObj, getAndSetComments, handleToggle,
+  postId, commentObj, getAndSetComments, handleToggle = () => {},
 }) {
   const [formInput, setFormInput] = useState(initialState);
   const [comment, setComment] = useState();
@@ -61,7 +61,7 @@ function CommentForm({
     <>
       <Form onSubmit={handleSubmit}>
 
-        <FloatingLabel controlId="floatingInput3" label="Add a comment.." className="mb-3 commentForm">
+        <FloatingLabel controlId="floatingInput3" label={comment?.id ? 'Update your comment' : 'Add a comment...'} className="mb-3 commentForm">
           <Form.Control
             type="text"
             placeholder="Add a comment..."

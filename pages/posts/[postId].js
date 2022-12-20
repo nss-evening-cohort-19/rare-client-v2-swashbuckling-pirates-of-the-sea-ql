@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { getSinglePost } from '../../utils/data/postData';
 import CommentForm from '../../components/comments/CommentForm';
 import CommentCard from '../../components/comments/CommentCard';
-import { getAllComments } from '../../utils/data/commentData';
+import { getCommentsByPost } from '../../utils/data/commentData';
 import PostDetails from '../../components/posts/PostDetails';
 
 export default function ViewSinglePost() {
@@ -12,16 +12,16 @@ export default function ViewSinglePost() {
   const { postId } = router.query;
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    getSinglePost(postId).then(setPostDetails);
-  }, [postId]);
+  // useEffect(() => {
+  //   getSinglePost(postId).then(setPostDetails);
+  // }, [postId]);
 
   const getAndSetPost = () => {
     getSinglePost(postId).then(setPostDetails);
   };
 
   const getAndSetComments = () => {
-    getAllComments(postId).then(setComments);
+    getCommentsByPost(postId).then(setComments);
   };
 
   useEffect(() => {
