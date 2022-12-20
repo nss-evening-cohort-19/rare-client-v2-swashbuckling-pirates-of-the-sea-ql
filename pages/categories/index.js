@@ -9,10 +9,10 @@ import { deleteCategory, getCategories } from '../../utils/data/categoryData';
 
 function CategoriesPage() {
   // const { user } = useAuth();
-  const [category, setCategory] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getAllCategories = () => {
-    getCategories(category.id).then(setCategory);
+    getCategories().then(setCategories);
   };
 
   useEffect(() => {
@@ -21,12 +21,6 @@ function CategoriesPage() {
 
   const refresh = () => getAllCategories();
 
-  const deleteSingleCategory = () => {
-    if (window.confirm(`Delete ${category.label}?`)) {
-      deleteCategory(category.id).then(() => getAllCategories());
-    }
-  };
-
   return (
     <>
       <CategoryForm refresh={refresh} />
@@ -34,7 +28,7 @@ function CategoriesPage() {
       <Table striped bordered hover>
         <tbody>
           {
-            category?.map((categories) => (
+            categories?.map((category) => (
               <tr>
                 <td>
                   <Link href={`/categories/edit/${category.id}`} passHref>
@@ -42,9 +36,9 @@ function CategoriesPage() {
                       EDIT
                     </Button>
                   </Link>
-                  <Button variant="danger" onClick={() => deleteSingleCategory(category.id)}>Delete</Button>
+                  <Button variant="danger" onClick={() => deleteCategory(category.id).then(() => getAllCategories())}>Delete</Button>
                 </td>
-                <td>{categories.label}</td>
+                <td>{category.label}</td>
               </tr>
             ))
           }
