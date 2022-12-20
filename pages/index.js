@@ -1,25 +1,16 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-// import { useRouter } from 'next/router';
 // import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
 import { signOut } from '../utils/auth';
 import { useAuth } from '../utils/context/authContext';
-// import { getSingleUser } from '../utils/data/userData';
 // import { getPosts } from '../utils/data/postData';
 
 function Home() {
   const { user } = useAuth();
-  // const [theUser, setTheUser] = useState();
   // const [posts, setPosts] = useState([]);
 
   // useEffect(() => {
   //   getPosts().then(setPosts);
   // }, []);
-
-  // useEffect(() => {
-  //   getSingleUser(1).then(setTheUser);
-  // }, []);
-
   return (
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
