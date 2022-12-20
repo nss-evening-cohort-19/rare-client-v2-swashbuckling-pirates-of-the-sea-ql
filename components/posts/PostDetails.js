@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 import { useAuth } from '../../utils/context/authContext';
+import { deletePost } from '../../utils/data/postData';
 
 function PostDetails({ postObj }) {
   const { user } = useAuth();
@@ -20,7 +21,10 @@ function PostDetails({ postObj }) {
       </Card.Body>
       <Card.Footer>{postObj.categoryId?.label}</Card.Footer>
       {postObj.userId?.id === user.id ? (
-        <Button onClick={(() => router.push(`../posts/edit/${postObj.id}`))}>Edit</Button>
+        <>
+          <Button onClick={(() => router.push(`../posts/edit/${postObj.id}`))}>Edit</Button>
+          <Button onClick={(() => deletePost(postObj.id).then(() => router.push('/')))}>DELETE</Button>
+        </>
       ) : ''}
     </Card>
   );
