@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../utils/data/postData';
 
@@ -11,9 +12,11 @@ function PostDetails({ postObj }) {
 
   return (
     <Card>
-      <Card.Header>
-        Posted on: {postObj.createdOn} by: {postObj.userId?.first_name} {postObj.userId?.last_name}
-      </Card.Header>
+      <Link passHref href={`../users/${postObj?.userId?.id}`}>
+        <Card.Header>
+          Posted on: {postObj.createdOn} by: {postObj.userId?.first_name} {postObj.userId?.last_name}
+        </Card.Header>
+      </Link>
       <Card.Body>
         <Card.Title>{postObj.title}</Card.Title>
         <Card.Img src={postObj.imageUrl} />
