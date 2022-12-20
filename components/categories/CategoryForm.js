@@ -12,11 +12,10 @@ const initialState = {
 // eslint-disable-next-line react/prop-types
 function CategoryForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [category, setCategory] = useState([]);
+  const [setCategory] = useState([]);
 
   useEffect(() => {
     getCategories().then(setCategory);
-    console.warn(category);
     if (obj.id) setFormInput(obj);
   }, [obj]);
 
@@ -33,7 +32,6 @@ function CategoryForm({ obj }) {
     const payload = {
       ...formInput,
     };
-    console.warn(payload);
     addCategory(payload).then(() => {
       setFormInput(initialState);
     });

@@ -26,7 +26,7 @@ function CategoriesPage() {
         <tbody>
           {
             categories?.map((category) => (
-              <tr>
+              <tr key={category.id}>
                 <td>
                   <Link href={`/categories/edit/${category.id}`} passHref>
                     <Button size="sm" variant="dark">

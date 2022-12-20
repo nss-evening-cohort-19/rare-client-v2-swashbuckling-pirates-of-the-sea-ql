@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
@@ -11,11 +12,10 @@ const initialState = {
 // eslint-disable-next-line react/prop-types
 function TagForm({ obj }) {
   const [formInput, setFormInput] = useState(initialState);
-  const [tag, setTag] = useState([]);
+  const [setTag] = useState([]);
 
   useEffect(() => {
     getTags().then(setTag);
-    console.warn(tag);
     if (obj.id) setFormInput(obj);
   }, [obj]);
 
@@ -32,7 +32,6 @@ function TagForm({ obj }) {
     const payload = {
       ...formInput,
     };
-    console.warn(payload);
     addTag(payload).then(() => {
       setFormInput(initialState);
     });
