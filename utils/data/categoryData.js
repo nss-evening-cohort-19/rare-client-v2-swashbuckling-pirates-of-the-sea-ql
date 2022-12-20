@@ -4,8 +4,8 @@ import { clientCredentials } from '../client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-export const getCategories = (categoryId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/categories/${categoryId}`).then((response) => response.json())
+export const getCategories = () => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/categories`).then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
@@ -25,7 +25,7 @@ export const addCategory = (category) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export const updateCategory = (category, categoryId) => ((resolve, reject) => {
+export const updateCategory = (category, categoryId) => new Promise((resolve, reject) => {
   const catObj = {
     label: category.label,
   };
@@ -40,7 +40,7 @@ export const updateCategory = (category, categoryId) => ((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export const deleteCategory = (categoryId) => ((resolve, reject) => {
+export const deleteCategory = (categoryId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/categories/${categoryId}`, {
     method: 'DELETE',
   })
