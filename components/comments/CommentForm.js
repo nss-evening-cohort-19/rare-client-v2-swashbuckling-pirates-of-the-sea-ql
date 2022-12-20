@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
@@ -11,11 +10,12 @@ const initialState = {
   content: '',
 };
 
-// eslint-disable-next-line react/prop-types
-function CommentForm({ postId, commentObj }) {
+function CommentForm({
+  // eslint-disable-next-line react/prop-types
+  postId, commentObj, getAndSetComments, handleToggle,
+}) {
   const [formInput, setFormInput] = useState(initialState);
   const [comment, setComment] = useState();
-  const router = useRouter();
   const { user } = useAuth();
 
   useEffect(() => {
@@ -39,21 +39,20 @@ function CommentForm({ postId, commentObj }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (comment.id) {
-      updateComment(formInput)
+      updateComment(user, comment, formInput)
         .then(() => {
           setComment({});
           setFormInput(initialState);
-          router.push(`/posts/${postId}`);
+          getAndSetComments();
+          handleToggle();
         });
     } else {
-      console.log(formInput);
       const payload = {
         ...formInput, postId,
       };
-      console.log(payload);
       createComment(user, payload).then(() => {
         setFormInput(initialState);
-        router.push(`/posts/${postId}`);
+        getAndSetComments();
       });
     }
   };

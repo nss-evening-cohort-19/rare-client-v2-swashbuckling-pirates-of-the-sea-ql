@@ -22,14 +22,27 @@ const getSingleComment = (commentId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getCommentsByPost = (postId) => new Promise((resolve, reject) => {
+  fetch(`${clientCredentials.databaseURL}/comments?post_id=${postId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      resolve({
+        id: data.id,
+        postId: data.post_id,
+        authorId: data.author_id,
+        content: data.content,
+        createdOn: data.created_on,
+      });
+    })
+    .catch((error) => reject(error));
+});
+
 const createComment = (user, comment) => new Promise((resolve, reject) => {
-  console.warn('payload v1', comment);
   const commentObj = {
     post_id: comment.postId,
     author_id: user.id,
     content: comment.content,
   };
-  console.warn('commentObj', commentObj);
   fetch(`${clientCredentials.databaseURL}/comments`, {
     method: 'POST',
     body: JSON.stringify(commentObj),
@@ -49,25 +62,25 @@ const deleteComment = (commentId) => ((resolve, reject) => {
     .catch(reject);
 });
 
-const updateComment = (user, commentId, comment) => new Promise((resolve, reject) => {
+const updateComment = (user, comment, formInput) => new Promise((resolve, reject) => {
+  console.warn(formInput);
   const commentObj = {
-    post_id: comment.postId,
-    author_id: comment.authorId,
-    content: comment.content,
-    created_on: comment.createdOn,
+    post_id: comment.post.id,
+    author_id: comment.author.id,
+    content: formInput.content,
     user_id: user.uid,
   };
-  fetch(`${clientCredentials.databaseURL}/comments/${commentId}`, {
+  fetch(`${clientCredentials.databaseURL}/comments/${comment.id}`, {
     method: 'PUT',
     body: JSON.stringify(commentObj),
     headers: {
       'content-type': 'application/json',
     },
   })
-    .then((response) => resolve(response.json()))
+    .then(() => resolve())
     .catch((error) => reject(error));
 });
 
 export {
-  getAllComments, getSingleComment, createComment, deleteComment, updateComment,
+  getAllComments, getSingleComment, createComment, deleteComment, updateComment, getCommentsByPost,
 };
