@@ -28,7 +28,7 @@ export default function NavBar() {
           <Nav className="me-auto">
 
             {/* To add My Posts page: */}
-            <Link passHref href="/">
+            <Link passHref href="../posts/MyPosts">
               <Nav.Link>My Posts</Nav.Link>
             </Link>
 
