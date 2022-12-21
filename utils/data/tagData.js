@@ -4,8 +4,14 @@ import { clientCredentials } from '../client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-export const getTags = (tagId) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/tags/${tagId}`).then((response) => response.json())
+export const getTags = () => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/tags`).then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
+export const getSingleTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/tags/${id}`).then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
@@ -25,7 +31,7 @@ export const addTag = (tag) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export const updateTag = (tag, tagId) => ((resolve, reject) => {
+export const updateTag = (tag, tagId) => new Promise((resolve, reject) => {
   const tagObj = {
     label: tag.label,
   };
@@ -40,7 +46,7 @@ export const updateTag = (tag, tagId) => ((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
-export const deleteTag = (tagId) => ((resolve, reject) => {
+export const deleteTag = (tagId) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/tags/${tagId}`, {
     method: 'DELETE',
   })
