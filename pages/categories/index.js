@@ -1,9 +1,48 @@
-import React from 'react';
+import { Link } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Button, Table } from 'react-bootstrap';
+import CategoryForm from '../../components/categories/CategoryForm';
+import { deleteCategory, getCategories } from '../../utils/data/categoryData';
 
-export default function ViewAllCategories() {
+function CategoriesPage() {
+  // const { user } = useAuth();
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = () => {
+    getCategories().then(setCategories);
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
+  const refresh = () => getAllCategories();
+
   return (
-    <div>ViewAllCategories</div>
+    <>
+      <CategoryForm refresh={refresh} />
+      <h2>Categories</h2>
+      <Table striped bordered hover>
+        <tbody>
+          {
+            categories?.map((category) => (
+              <tr key={category.id}>
+                <td>
+                  <Link href={`/categories/edit/${category.id}`} passHref>
+                    <Button size="sm" variant="dark">
+                      EDIT
+                    </Button>
+                  </Link>
+                  <Button variant="danger" onClick={() => deleteCategory(category.id).then(() => getAllCategories())}>Delete</Button>
+                </td>
+                <td>{category.label}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </Table>
+    </>
   );
 }
 
-// View a list of all categories
+export default CategoriesPage;
