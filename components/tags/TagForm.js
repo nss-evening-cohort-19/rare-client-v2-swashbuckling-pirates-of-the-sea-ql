@@ -44,7 +44,7 @@ function TagForm({ object }) {
   };
   return (
     <Form className="form-floating" onSubmit={handleSubmit}>
-      <h2 className="text-black mt-5">{object.id ? 'Update' : 'Create'} a Category</h2>
+      <h2 className="text-black mt-5">{object.id ? 'Update' : 'Create'} a Tag</h2>
       <FloatingLabel controlId="floatingInput1" label="Label" className="mb-3">
         <Form.Control type="text" placeholder="Label" name="label" value={formInput.label} onChange={handleChange} required />
       </FloatingLabel>
