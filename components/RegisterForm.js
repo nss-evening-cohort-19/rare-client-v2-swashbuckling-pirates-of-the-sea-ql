@@ -14,13 +14,8 @@ const initialUserState = {
   active: '',
 };
 
-function RegisterForm({ user, updateUser }) {
+function RegisterForm({ user, onUpdate }) {
   const [formData, setFormData] = useState(initialUserState);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    registerUser(user, formData).then(() => updateUser(user.uid));
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +23,11 @@ function RegisterForm({ user, updateUser }) {
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    registerUser(user, formData).then(() => onUpdate(user.uid));
   };
 
   return (
@@ -56,7 +56,7 @@ RegisterForm.propTypes = {
   user: PropTypes.shape({
     uid: PropTypes.string.isRequired,
   }).isRequired,
-  updateUser: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default RegisterForm;
