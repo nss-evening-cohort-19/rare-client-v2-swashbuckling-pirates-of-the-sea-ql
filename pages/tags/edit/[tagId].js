@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { getSingleTag, getTags } from '../../../utils/data/tagData';
+import { getSingleTag } from '../../../utils/data/tagData';
 import TagForm from '../../../components/tags/TagForm';
 
 export default function EditTag() {
