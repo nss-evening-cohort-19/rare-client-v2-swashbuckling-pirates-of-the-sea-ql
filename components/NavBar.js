@@ -17,7 +17,6 @@ import Logo from '../public/rare.jpeg';
 
 export default function NavBar({ user }) {
   const router = useRouter();
-  console.warn(router.route);
 
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -53,11 +52,18 @@ export default function NavBar({ user }) {
               <AddIcon />
             </Link>
           </div>
-          <div className="profileAvatar">
-            <Link passHref href={`users/${user.id}`}>
+
+          {router.route === '/users/[userId]' ? (
+            <div className="profileAvatar">
               <Avatar src={user.profile_image_url} />
-            </Link>
-          </div>
+            </div>
+          ) : (
+            <div className="profileAvatar">
+              <Link passHref href={`users/${user.id}`}>
+                <Avatar src={user.profile_image_url} />
+              </Link>
+            </div>
+          )}
 
           <Button variant="danger" onClick={signOut}>
             Sign Out
