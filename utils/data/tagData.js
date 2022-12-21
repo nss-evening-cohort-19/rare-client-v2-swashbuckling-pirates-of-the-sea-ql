@@ -10,6 +10,12 @@ export const getTags = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+export const getSingleTag = (id) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/tags/${id}`).then((response) => response.json())
+    .then(resolve)
+    .catch(reject);
+});
+
 export const addTag = (tag) => new Promise((resolve, reject) => {
   const tagObj = {
     label: tag.label,

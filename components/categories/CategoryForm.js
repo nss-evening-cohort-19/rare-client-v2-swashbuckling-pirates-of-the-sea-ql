@@ -5,7 +5,9 @@ import { useRouter } from 'next/router';
 import Button from 'react-bootstrap/Button';
 import { FloatingLabel } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import { addCategory, getCategories, updateCategory } from '../../utils/data/categoryData';
+import {
+  addCategory, getCategories, updateCategory,
+} from '../../utils/data/categoryData';
 
 const initialState = {
   label: '',
@@ -33,12 +35,12 @@ function CategoryForm({ object }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (object.id) {
-      updateCategory(formInput)
-        .then(() => router.push('/'));
+      updateCategory(formInput, object.id)
+        .then(() => router.push('/categories'));
     } else {
       const payload = { ...formInput };
       addCategory(payload).then(() => {
-        router.push('/');
+        router.push('/categories');
       });
     }
   };
