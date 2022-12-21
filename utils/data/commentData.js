@@ -55,7 +55,6 @@ const deleteComment = (commentId) => ((resolve, reject) => {
 });
 
 const updateComment = (user, comment, formInput) => new Promise((resolve, reject) => {
-  console.warn(formInput);
   const commentObj = {
     post_id: comment.post.id,
     author_id: comment.author.id,

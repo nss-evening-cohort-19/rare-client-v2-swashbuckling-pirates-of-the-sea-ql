@@ -1,12 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'react-bootstrap';
+import { useRouter } from 'next/router';
 
-function CategoryFilter({ catObj }) {
+function CategoryFilterButton({ catObj }) {
+  const router = useRouter();
+  const handleClick = () => {
+    router.push(`../../posts/category/${catObj.id}`);
+  };
+
   return (
-    <div>CategoryFilter</div>
+    <Button variant="link" onClick={handleClick}>{catObj.label}</Button>
   );
 }
 
-CategoryFilter.propTypes = {};
+CategoryFilterButton.propTypes = {
+  catObj: PropTypes.shape({
+    id: PropTypes.number,
+    label: PropTypes.string,
+  }).isRequired,
+};
 
-export default CategoryFilter;
+export default CategoryFilterButton;
