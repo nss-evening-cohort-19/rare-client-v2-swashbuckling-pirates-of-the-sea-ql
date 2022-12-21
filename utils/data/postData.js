@@ -76,6 +76,12 @@ const getPostByCategory = (categoryId) => new Promise((resolve, reject) => {
     .catch((err) => reject(err));
 });
 
+const getPostsByUser = (userId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/posts?user=${userId}`)
+    .then((response) => resolve(response.json()))
+    .catch(reject);
+});
+
 export {
-  getPosts, getSinglePost, createPost, deletePost, updatePost, getPostByCategory,
+  getPosts, getSinglePost, createPost, deletePost, updatePost, getPostByCategory, getPostsByUser,
 };
