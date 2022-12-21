@@ -46,7 +46,7 @@ const createComment = (user, comment) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const deleteComment = (commentId) => ((resolve, reject) => {
+const deleteComment = (commentId) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/comments/${commentId}`, {
     method: 'DELETE',
   })
