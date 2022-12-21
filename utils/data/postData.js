@@ -70,6 +70,12 @@ const updatePost = (user, post, postId) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getPostByCategory = (categoryId) => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/posts?category=${categoryId}`)
+    .then((response) => resolve(response.json()))
+    .catch((err) => reject(err));
+});
+
 export {
-  getPosts, getSinglePost, createPost, deletePost, updatePost,
+  getPosts, getSinglePost, createPost, deletePost, updatePost, getPostByCategory,
 };

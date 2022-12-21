@@ -28,9 +28,9 @@ export default function PostCard({
         <Card.Text>
           {content}
         </Card.Text>
-        <Button onClick={(() => router.push(`../posts/${id}`))}>VIEW</Button>
+        <Button variant="link" onClick={(() => router.push(`../../posts/${id}`))}>VIEW</Button>
         {userId.id === user.id ? (
-          <><Button>EDIT</Button><Button onClick={(() => deleteThisPost(id))}>DELETE</Button></>
+          <><Button variant="link" onClick={(() => router.push(`../../posts/edit/${id}`))}>EDIT</Button><Button variant="link" onClick={(() => deleteThisPost(id))}>DELETE</Button></>
         ) : ''}
       </Card.Body>
       <Card.Footer>{categoryId?.label}</Card.Footer>
