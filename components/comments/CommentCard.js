@@ -8,7 +8,6 @@ import { deleteComment } from '../../utils/data/commentData';
 // eslint-disable-next-line react/prop-types
 function CommentCard({ commentObj, getAndSetComments }) {
   const { user } = useAuth();
-  console.warn(commentObj.author.id, user.id);
   const [editToggle, setEditToggle] = useState(false);
   const handleToggle = () => {
     if (editToggle === false) {
