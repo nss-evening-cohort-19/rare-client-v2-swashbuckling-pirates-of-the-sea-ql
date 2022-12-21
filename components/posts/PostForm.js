@@ -56,10 +56,10 @@ export default function PostForm({ postObj, user }) {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Category</Form.Label>
-          <Form.Select onChange={handleChange} className="mb-3" name="categoryId" required>
+          <Form.Select onChange={handleChange} className="mb-3" name="categoryId" defaultValue={currentPost.categoryId} required>
             <option value="">Select a Category</option>
             {categories.map((category) => (
-              <option selected={category.id === currentPost.categoryId} key={category.label} value={category.id}>
+              <option key={category.id} value={category.id}>
                 {category.label}
               </option>
             ))}
