@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-max-props-per-line */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -53,17 +54,15 @@ export default function NavBar({ user }) {
             </Link>
           </div>
 
-          {router.route === '/users/[userId]' ? (
-            <div className="profileAvatar">
+          <div className="profileAvatar">
+            <Button
+              className="avatarButton" onClick={() => (
+                router.push(`/users/${user.id}`)
+              )}
+            >
               <Avatar src={user.profile_image_url} />
-            </div>
-          ) : (
-            <div className="profileAvatar">
-              <Link passHref href={`users/${user.id}`}>
-                <Avatar src={user.profile_image_url} />
-              </Link>
-            </div>
-          )}
+            </Button>
+          </div>
 
           <Button variant="danger" onClick={signOut}>
             Sign Out
