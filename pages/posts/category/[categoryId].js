@@ -18,7 +18,7 @@ export default function ViewPostsByCategory() {
   }, [categoryId]);
 
   return (
-    <div className="d-flex flex-wrap justify-content-between">
+    <div>
       <Button variant="link" onClick={(() => router.push('/'))}>All</Button>
       {categories.map((category) => (
         <CategoryFilterButton key={category.id} catObj={category} />
