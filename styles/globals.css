@@ -50,3 +50,7 @@ body {
 .profileAvatar {
   margin-right: 10px;
 }
+
+.avatarButton {
+  background-color: black;
+}
