@@ -1,4 +1,6 @@
+/* eslint-disable react/jsx-max-props-per-line */
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import PropTypes from 'prop-types';
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -9,10 +11,14 @@ import {
 } from 'react-bootstrap';
 import Image from 'next/image';
 import AddIcon from '@mui/icons-material/Add';
+import Avatar from '@mui/material/Avatar';
+import { useRouter } from 'next/router';
 import { signOut } from '../utils/auth';
 import Logo from '../public/rare.jpeg';
 
-export default function NavBar() {
+export default function NavBar({ user }) {
+  const router = useRouter();
+
   return (
     <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
       <Container>
@@ -28,7 +34,7 @@ export default function NavBar() {
           <Nav className="me-auto">
 
             {/* To add My Posts page: */}
-            <Link passHref href="/">
+            <Link passHref href="../posts/MyPosts">
               <Nav.Link>My Posts</Nav.Link>
             </Link>
 
@@ -48,6 +54,16 @@ export default function NavBar() {
             </Link>
           </div>
 
+          <div className="profileAvatar">
+            <Button
+              className="avatarButton" onClick={() => (
+                router.push(`/users/${user.id}`)
+              )}
+            >
+              <Avatar src={user.profile_image_url} />
+            </Button>
+          </div>
+
           <Button variant="danger" onClick={signOut}>
             Sign Out
           </Button>
@@ -57,3 +73,11 @@ export default function NavBar() {
     </Navbar>
   );
 }
+
+NavBar.propTypes = {
+  user: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    uid: PropTypes.string.isRequired,
+    profile_image_url: PropTypes.string.isRequired,
+  }).isRequired,
+};

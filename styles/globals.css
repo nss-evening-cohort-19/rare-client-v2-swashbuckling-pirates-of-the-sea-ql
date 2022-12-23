@@ -46,3 +46,11 @@ body {
 .verticalIcon {
   color: black;
 }
+
+.profileAvatar {
+  margin-right: 10px;
+}
+
+.avatarButton {
+  background-color: black;
+}
