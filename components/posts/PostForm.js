@@ -18,7 +18,7 @@ export default function PostForm({ postObj, user }) {
   const [categories, setCategories] = useState([]);
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState([]);
 
   const router = useRouter();
 
@@ -29,8 +29,7 @@ export default function PostForm({ postObj, user }) {
       getSinglePost(postObj.id).then((response) => {
         getTagsByPost(postObj.id).then((tagArr) => setSelectedTags(tagArr));
         setCurrentPost(response);
-        // setSelectedTags(tags.map((tag) => tag.id)); // added this line to set the selected tags
-        setSelectedCategory(postObj.categoryId.id); // added this line to set the selected category
+        setSelectedCategory(postObj.categoryId.id);
       });
     }
   }, [postObj]);
@@ -87,7 +86,7 @@ export default function PostForm({ postObj, user }) {
         </Form.Group>
         <Form.Group className="mb-3">
           <Form.Label>Category</Form.Label>
-          <Form.Select onChange={handleChange} className="mb-3" name="categoryId" value={selectedCategory || ''} required>
+          <Form.Select onChange={handleChange} className="mb-3" name="categoryId" value={selectedCategory} required>
             <option value="">Select a Category</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
@@ -103,11 +102,12 @@ export default function PostForm({ postObj, user }) {
               key={tag.id}
               type="checkbox"
               label={tag.label}
+              checked={selectedTags.find((t) => t.id === tag.id)}
               onChange={(e) => {
                 if (e.target.checked) {
-                  setSelectedTags([...selectedTags, tag.id]);
+                  setSelectedTags([...selectedTags, tag]);
                 } else {
-                  setSelectedTags(selectedTags.filter((t) => t !== tag.id));
+                  setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
                 }
               }}
             />
