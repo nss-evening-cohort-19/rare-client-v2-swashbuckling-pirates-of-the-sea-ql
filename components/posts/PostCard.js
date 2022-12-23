@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/router';
@@ -6,10 +6,12 @@ import { Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../utils/data/postData';
+import { getTagsByPost } from '../../utils/data/postTagData';
 
 export default function PostCard({
   createdOn, title, content, imageUrl, categoryId, userId, onUpdate, id,
 }) {
+  const [postTagsArray, setPostsTagsArray] = useState([]);
   const { user } = useAuth();
   const router = useRouter();
   const deleteThisPost = () => {
@@ -17,6 +19,10 @@ export default function PostCard({
       deletePost(id).then(() => onUpdate());
     }
   };
+
+  useEffect(() => {
+    getTagsByPost(id).then(setPostsTagsArray);
+  }, [id]);
   return (
     <Card>
       <Link passHref href={`users/${userId.id}`}>
@@ -33,7 +39,12 @@ export default function PostCard({
           <><Button variant="link" onClick={(() => router.push(`../../posts/edit/${id}`))}>EDIT</Button><Button variant="link" onClick={(() => deleteThisPost(id))}>DELETE</Button></>
         ) : ''}
       </Card.Body>
-      <Card.Footer>{categoryId?.label}</Card.Footer>
+      <Card.Footer>
+        {categoryId?.label}
+        {postTagsArray.length > 0 ? (
+          postTagsArray.map((postTag) => <span key={postTag.id} className="badge text-bg-dark">{postTag.label}</span>)
+        ) : ''}
+      </Card.Footer>
     </Card>
   );
 }
@@ -54,4 +65,14 @@ PostCard.propTypes = {
     uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
+  // postTags: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     id: PropTypes.number,
+  //     label: PropTypes.string,
+  //   }),
+  // ),
 };
+
+// PostCard.defaultProps = {
+//   postTags: [],
+// };

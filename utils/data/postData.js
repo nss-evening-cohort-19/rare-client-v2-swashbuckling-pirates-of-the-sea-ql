@@ -59,7 +59,7 @@ const updatePost = (user, post, postId) => new Promise((resolve, reject) => {
     content: post.content,
     publication_date: post.createdOn,
     image_url: post.imageUrl,
-    user_id: user.uid,
+    user_id: user.id,
   };
   fetch(`${dbUrl}/posts/${postId}`, {
     method: 'PUT',

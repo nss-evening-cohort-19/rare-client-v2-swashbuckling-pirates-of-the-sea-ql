@@ -1,7 +1,7 @@
 import { clientCredentials } from '../client';
 
 const getTagsByPost = (postId) => new Promise((resolve, reject) => {
-  fetch(`${clientCredentials.databaseURL}/posttags?post_id=${postId}`)
+  fetch(`${clientCredentials.databaseURL}/posttags?post=${postId}`)
     .then((response) => response.json())
     .then(resolve)
     .catch(reject);
@@ -17,8 +17,8 @@ const deletePostTag = (postTagId) => ((resolve, reject) => {
 
 const createPostTag = (postTag) => new Promise((resolve, reject) => {
   const postTagObj = {
-    post_id: postTag.postId,
-    tag_id: postTag.tagId,
+    post_id: Number(postTag.postId),
+    tag_id: Number(postTag.tagId),
   };
   fetch(`${clientCredentials.databaseURL}/posttags`, {
     method: 'POST',
