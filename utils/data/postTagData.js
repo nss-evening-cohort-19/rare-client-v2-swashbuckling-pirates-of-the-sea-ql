@@ -7,7 +7,7 @@ const getTagsByPost = (postId) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deletePostTag = (postTagId) => ((resolve, reject) => {
+const deletePostTag = (postTagId) => new Promise((resolve, reject) => {
   fetch(`${clientCredentials.databaseURL}/posttags/${postTagId}`, {
     method: 'DELETE',
   })

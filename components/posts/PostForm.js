@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { createPost, updatePost, getSinglePost } from '../../utils/data/postData';
 import { getCategories } from '../../utils/data/categoryData';
 import { getTags } from '../../utils/data/tagData';
-import { createPostTag, getTagsByPost } from '../../utils/data/postTagData';
+import { createPostTag, deletePostTag, getTagsByPost } from '../../utils/data/postTagData';
 
 const initialState = {
   title: '',
@@ -19,7 +19,6 @@ export default function PostForm({ postObj, user }) {
   const [tags, setTags] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState([]);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -27,7 +26,7 @@ export default function PostForm({ postObj, user }) {
     getTags().then(setTags);
     if (postObj.id) {
       getSinglePost(postObj.id).then((response) => {
-        getTagsByPost(postObj.id).then((tagArr) => setSelectedTags(tagArr));
+        getTagsByPost(postObj.id).then((tagArr) => setSelectedTags(tagArr.map((tag) => tag.tag_id)));
         setCurrentPost(response);
         setSelectedCategory(postObj.categoryId.id);
       });
@@ -36,27 +35,61 @@ export default function PostForm({ postObj, user }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setCurrentPost((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'categoryId') {
+      setSelectedCategory(value);
+      setCurrentPost((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    } else {
+      setCurrentPost((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleTagChange = (tagId) => {
+    if (selectedTags.includes(tagId)) {
+      // remove the postTag from the selectedTags array
+      setSelectedTags(selectedTags.filter((tag) => tag !== tagId));
+    } else {
+      // add the postTag to the selectedTags array
+      setSelectedTags([...selectedTags, tagId]);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (postObj.id) {
-      updatePost(user, currentPost, postObj.id).then(() => {
-        selectedTags.forEach((tagId) => {
-          const postTag = {
-            postId: postObj.id,
-            tagId,
-          };
-          createPostTag(postTag);
+      // First, get the existing postTags for the post
+      getTagsByPost(postObj.id).then((existingPostTags) => {
+        // Then, delete any existing postTags that are not in the selectedTags array
+        existingPostTags.forEach((existingPostTag) => {
+          if (!selectedTags.includes(existingPostTag.tag_id)) {
+            deletePostTag(existingPostTag.id);
+          }
         });
+        // Finally, create new postTags or do nothing if they already exist
+        selectedTags.forEach((tagId) => {
+          const existingPostTag = existingPostTags.find((postTag) => postTag.tag_id === tagId);
+          if (!existingPostTag) {
+            const postTag = {
+              postId: postObj.id,
+              tagId,
+            };
+            createPostTag(postTag);
+          }
+        });
+      });
+
+      updatePost(user, currentPost, postObj.id).then(() => {
         router.push('/');
       });
     } else {
       createPost(currentPost, user).then((response) => {
+        // For new posts, create the postTags
         selectedTags.forEach((tagId) => {
           const postTag = {
             postId: response.id,
@@ -64,6 +97,7 @@ export default function PostForm({ postObj, user }) {
           };
           createPostTag(postTag);
         });
+
         router.push('/');
       });
     }
@@ -98,19 +132,7 @@ export default function PostForm({ postObj, user }) {
         <Form.Group className="mb-3">
           <Form.Label>Tags</Form.Label>
           {tags.map((tag) => (
-            <Form.Check
-              key={tag.id}
-              type="checkbox"
-              label={tag.label}
-              checked={selectedTags.find((t) => t.id === tag.id)}
-              onChange={(e) => {
-                if (e.target.checked) {
-                  setSelectedTags([...selectedTags, tag]);
-                } else {
-                  setSelectedTags(selectedTags.filter((t) => t.id !== tag.id));
-                }
-              }}
-            />
+            <Form.Check type="checkbox" label={tag.label} value={tag.id} key={tag.id} checked={selectedTags.includes(tag.id)} onChange={() => handleTagChange(tag.id)} id={`checkbox-${tag.id}`} />
           ))}
         </Form.Group>
 

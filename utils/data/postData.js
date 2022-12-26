@@ -54,7 +54,7 @@ const deletePost = (postId) => new Promise((resolve, reject) => {
 
 const updatePost = (user, post, postId) => new Promise((resolve, reject) => {
   const postObj = {
-    category_id: Number(post.categoryId),
+    category_id: Number(post.categoryId.id),
     title: post.title,
     content: post.content,
     publication_date: post.createdOn,

@@ -10,20 +10,11 @@ export const getCategories = () => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-// export const getCategoriesById = (categoryId) => new Promise((resolve, reject) => {
-//   fetch(`${dbUrl}/categories/${categoryId}`).then((response) => response.json())
-//     .then(resolve)
-//     .catch(reject);
-// });
-
 export const getSingleCategory = (id) => new Promise((resolve, reject) => {
   fetch(`${dbUrl}/categories/${id}`).then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
-
-// export const getCategoriesById = (categoryId) => fetch(`http://localhost:8000/categories/${categoryId}`)
-//   .then((res) => res.json());
 
 export const addCategory = (category) => new Promise((resolve, reject) => {
   const catObj = {
@@ -62,6 +53,3 @@ export const deleteCategory = (categoryId) => new Promise((resolve, reject) => {
     .then(resolve)
     .catch(reject);
 });
-
-// export const getCategoriesBySearchTerm = (searchTerm) => fetch(`http://localhost:8088/categories?search=${searchTerm}`)
-//   .then((res) => res.json());

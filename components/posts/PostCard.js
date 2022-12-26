@@ -26,24 +26,39 @@ export default function PostCard({
   return (
     <Card>
       <Link passHref href={`users/${userId.id}`}>
-        <Card.Header>Posted on: {createdOn} by: {userId?.first_name} {userId?.last_name}</Card.Header>
+        <Card.Header>
+          Posted on: {createdOn} by: {userId?.first_name} {userId?.last_name}
+        </Card.Header>
       </Link>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
         <Card.Img src={imageUrl} />
-        <Card.Text>
-          {content}
-        </Card.Text>
-        <Button variant="link" onClick={(() => router.push(`../../posts/${id}`))}>VIEW</Button>
+        <Card.Text>{content}</Card.Text>
+        <Button variant="link" onClick={() => router.push(`../../posts/${id}`)}>
+          VIEW
+        </Button>
         {userId.id === user.id ? (
-          <><Button variant="link" onClick={(() => router.push(`../../posts/edit/${id}`))}>EDIT</Button><Button variant="link" onClick={(() => deleteThisPost(id))}>DELETE</Button></>
-        ) : ''}
+          <>
+            <Button variant="link" onClick={() => router.push(`../../posts/edit/${id}`)}>
+              EDIT
+            </Button>
+            <Button variant="link" onClick={() => deleteThisPost(id)}>
+              DELETE
+            </Button>
+          </>
+        ) : (
+          ''
+        )}
       </Card.Body>
       <Card.Footer>
         {categoryId?.label}
-        {postTagsArray.length > 0 ? (
-          postTagsArray.map((postTag) => <span key={postTag.id} className="badge text-bg-dark">{postTag.label}</span>)
-        ) : ''}
+        {postTagsArray.length > 0
+          ? postTagsArray.map((postTag) => (
+            <span key={postTag.id} className="badge text-bg-dark">
+              {postTag.tag_label}
+            </span>
+          ))
+          : ''}
       </Card.Footer>
     </Card>
   );
@@ -65,14 +80,4 @@ PostCard.propTypes = {
     uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
-  // postTags: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     id: PropTypes.number,
-  //     label: PropTypes.string,
-  //   }),
-  // ),
 };
-
-// PostCard.defaultProps = {
-//   postTags: [],
-// };
