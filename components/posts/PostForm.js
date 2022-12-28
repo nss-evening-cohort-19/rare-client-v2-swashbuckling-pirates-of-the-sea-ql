@@ -51,27 +51,22 @@ export default function PostForm({ postObj, user }) {
 
   const handleTagChange = (tagId) => {
     if (selectedTags.includes(tagId)) {
-      // remove the postTag from the selectedTags array
+      console.warn(selectedTags);
       setSelectedTags(selectedTags.filter((tag) => tag !== tagId));
     } else {
-      // add the postTag to the selectedTags array
       setSelectedTags([...selectedTags, tagId]);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (postObj.id) {
-      // First, get the existing postTags for the post
       getTagsByPost(postObj.id).then((existingPostTags) => {
-        // Then, delete any existing postTags that are not in the selectedTags array
         existingPostTags.forEach((existingPostTag) => {
           if (!selectedTags.includes(existingPostTag.tag_id)) {
             deletePostTag(existingPostTag.id);
           }
         });
-        // Finally, create new postTags or do nothing if they already exist
         selectedTags.forEach((tagId) => {
           const existingPostTag = existingPostTags.find((postTag) => postTag.tag_id === tagId);
           if (!existingPostTag) {
@@ -83,13 +78,11 @@ export default function PostForm({ postObj, user }) {
           }
         });
       });
-
       updatePost(user, currentPost, postObj.id).then(() => {
         router.push('/');
       });
     } else {
       createPost(currentPost, user).then((response) => {
-        // For new posts, create the postTags
         selectedTags.forEach((tagId) => {
           const postTag = {
             postId: response.id,
@@ -97,7 +90,6 @@ export default function PostForm({ postObj, user }) {
           };
           createPostTag(postTag);
         });
-
         router.push('/');
       });
     }
