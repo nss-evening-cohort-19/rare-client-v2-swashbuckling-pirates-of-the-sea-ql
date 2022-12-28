@@ -20,6 +20,7 @@ const getSinglePost = (postId) => new Promise((resolve, reject) => {
         content: data.content,
         createdOn: data.publication_date,
         imageUrl: data.image_url,
+        reactionsOnPosts: data.reactions_on_posts,
       });
     }).catch((error) => reject(error));
 });

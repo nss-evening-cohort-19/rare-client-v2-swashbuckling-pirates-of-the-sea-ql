@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
@@ -25,7 +26,7 @@ function ReactionsModal({
           <Modal.Title>Choose a Reaction!</Modal.Title>
         </Modal.Header>
         <Modal.Body className="reaction-modal">{reactions.map((reaction) => (
-          <div className="modalEmoji"><Reaction reaction={reaction} user={user} postReactions={postReactions} postId={postId} onUpdate={onUpdate} handleClose={handleClose} />
+          <div className="modalEmoji"><Reaction key={reaction.id} reaction={reaction} user={user} postReactions={postReactions} postId={postId} onUpdate={onUpdate} handleClose={handleClose} />
           </div>
         ))}
         </Modal.Body>
@@ -48,8 +49,8 @@ ReactionsModal.propTypes = {
     user_id: PropTypes.number,
     reaction_id: PropTypes.number,
     post_id: PropTypes.number,
-  })).isRequired,
-  postId: PropTypes.number.isRequired,
+  })),
+  postId: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };
 

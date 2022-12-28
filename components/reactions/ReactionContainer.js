@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import PropTypes from 'prop-types';
 import Reaction from './Reaction';
 import ReactionsModal from './ReactionsModal';
@@ -5,8 +6,7 @@ import ReactionsModal from './ReactionsModal';
 export default function ReactionContainer({
   reactions, user, postReactions, postId, onUpdate,
 }) {
-  const reactionsToDisplay = reactions.filter((reaction) => postReactions?.some((postReaction) => reaction.id === postReaction.reaction_id));
-
+  const reactionsToDisplay = reactions?.filter((reaction) => postReactions?.some((postReaction) => reaction.id === postReaction.reaction_id));
   return (
     <div className="reactionContainer">
       <div className="reactionModalContainer">
@@ -17,7 +17,7 @@ export default function ReactionContainer({
 
         return (
           <div className="reactionCounter">
-            <Reaction reaction={reaction} user={user} postReactions={postReactions} postId={postId} onUpdate={onUpdate} handleClose={() => null} /> <div className="number">{reactionCount}</div>
+            <Reaction key={reaction.id} reaction={reaction} user={user} postReactions={postReactions} postId={postId} onUpdate={onUpdate} handleClose={() => null} /> <div className="number">{reactionCount}</div>
           </div>
         );
       })}
@@ -39,7 +39,7 @@ ReactionContainer.propTypes = {
     user_id: PropTypes.number,
     reaction_id: PropTypes.number,
     post_id: PropTypes.number,
-  })).isRequired,
-  postId: PropTypes.number.isRequired,
+  })),
+  postId: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

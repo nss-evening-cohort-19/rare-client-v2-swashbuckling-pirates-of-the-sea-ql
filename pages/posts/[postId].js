@@ -38,8 +38,6 @@ export default function ViewSinglePost() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postId]);
 
-  console.warn(postDetails);
-
   return (
     <div className="d-flex flex-wrap justify-content-between">
       <Button variant="link" onClick={() => router.push('/')}>
@@ -51,7 +49,7 @@ export default function ViewSinglePost() {
       <div>
         <PostDetails postObj={postDetails} />
       </div>
-      <ReactionContainer reactions={reactions} postReactions={postDetails.post_reactions} user={user} postId={postDetails.id} onUpdate={getAndSetPost} />
+      <ReactionContainer reactions={reactions} postReactions={postDetails.reactionsOnPosts} user={user} postId={postId} onUpdate={getAndSetPost} />
       <div>
         <CommentForm postId={postDetails.id} getAndSetComments={getAndSetComments} />
         {comments?.map((comment) => (

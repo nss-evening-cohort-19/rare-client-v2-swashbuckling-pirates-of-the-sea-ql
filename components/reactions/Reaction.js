@@ -11,17 +11,16 @@ export default function Reaction({
   const handleClick = () => {
     const reactions = postReactions?.filter((postReaction) => postReaction.user_id === user.id && postReaction.reaction_id === reaction.id);
     if (reactions?.length) {
-      deletePostReaction(reactions[0].id).then(() => {
+      deletePostReaction(reactions[0].post_reaction_id).then(() => {
         onUpdate();
         handleClose();
       });
     } else {
       const payload = {
-        user_id: user.id,
-        reaction_id: reaction.id,
-        post_id: postId,
+        reactionId: reaction.id,
+        postId,
       };
-      createPostReaction(payload).then(() => {
+      createPostReaction(payload, user).then(() => {
         onUpdate();
         handleClose();
       });
@@ -57,7 +56,7 @@ Reaction.propTypes = {
     reaction_id: PropTypes.number,
     post_id: PropTypes.number,
   })).isRequired,
-  postId: PropTypes.number.isRequired,
+  postId: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   handleClose: PropTypes.func,
 
