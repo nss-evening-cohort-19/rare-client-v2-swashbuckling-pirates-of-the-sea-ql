@@ -12,8 +12,6 @@ import {
 const initialState = {
   label: '',
 };
-
-// eslint-disable-next-line react/prop-types
 function CategoryForm({ object }) {
   const [formInput, setFormInput] = useState(initialState);
   const [setCategory] = useState([]);
@@ -39,15 +37,13 @@ function CategoryForm({ object }) {
         .then(() => router.push('/categories'));
     } else {
       const payload = { ...formInput };
-      addCategory(payload).then(() => {
-        router.push('/categories');
-      });
+      addCategory(payload).then(setFormInput(initialState));
     }
   };
   return (
     <Form className="form-floating" onSubmit={handleSubmit}>
       <h2 className="text-black mt-5">{object.id ? 'Update' : 'Create'} a Category</h2>
-      <FloatingLabel controlId="floatingInput1" label="Label" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Category Name" className="mb-3">
         <Form.Control type="text" placeholder="Label" name="label" value={formInput.label} onChange={handleChange} required />
       </FloatingLabel>
       <Button type="submit">{object.id ? 'Update' : 'Create'} Category</Button>

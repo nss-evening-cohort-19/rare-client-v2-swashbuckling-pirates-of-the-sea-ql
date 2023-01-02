@@ -28,7 +28,7 @@ function TagsPage() {
             tags?.map((tag) => (
               <tr key={tag.id}>
                 <td>
-                  <Link href={`/tags/edit/${tag.id}`} passHref>
+                  <Link href={`/tags/edit/${tag.id}`} passhref="true">
                     <Button size="sm" variant="dark">
                       EDIT
                     </Button>

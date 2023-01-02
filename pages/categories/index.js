@@ -14,13 +14,11 @@ function CategoriesPage() {
 
   useEffect(() => {
     getAllCategories();
-  }, []);
-
-  const refresh = () => getAllCategories();
+  }, [categories]);
 
   return (
     <>
-      <CategoryForm refresh={refresh} />
+      <CategoryForm object={{}} />
       <h2>Categories</h2>
       <Table striped bordered hover>
         <tbody>
@@ -28,7 +26,7 @@ function CategoriesPage() {
             categories?.map((category) => (
               <tr key={category.id}>
                 <td>
-                  <Link href={`/categories/edit/${category.id}`} passHref>
+                  <Link href={`/categories/edit/${category.id}`} passhref="true">
                     <Button size="sm" variant="dark">
                       EDIT
                     </Button>
