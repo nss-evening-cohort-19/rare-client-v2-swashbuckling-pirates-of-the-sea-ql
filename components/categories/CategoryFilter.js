@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'react-bootstrap';
+import Button from '@mui/material/Button';
 import { useRouter } from 'next/router';
 
 function CategoryFilterButton({ catObj }) {
@@ -10,7 +10,9 @@ function CategoryFilterButton({ catObj }) {
   };
 
   return (
-    <Button variant="link" onClick={handleClick}>{catObj.label}</Button>
+    <Button onClick={handleClick}>
+      {catObj.label}
+    </Button>
   );
 }
 

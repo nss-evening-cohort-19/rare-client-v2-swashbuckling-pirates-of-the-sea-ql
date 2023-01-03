@@ -18,7 +18,7 @@ a {
 }
 
 body {
-  background-color: #88effd;
+  background-color: white;
 }
 
 /* Add icon on navbar */
@@ -98,4 +98,29 @@ body {
   background-color: lightblue;
   cursor: pointer;
   border-radius: 10%;
+}
+
+.reactionContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.badge {
+  margin: 5px;
+}
+
+.postForm {
+  margin: 10px;
+}
+
+@media(min-width: 1024px) {
+  .categoryFilters {
+  display: flex;
+  justify-content: center;
+}
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
 }

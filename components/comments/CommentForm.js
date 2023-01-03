@@ -59,7 +59,7 @@ function CommentForm({
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form className="commentForm" onSubmit={handleSubmit}>
 
         <FloatingLabel controlId="floatingInput3" label={comment?.id ? 'Update your comment' : 'Add a comment...'} className="mb-3 commentForm">
           <Form.Control
