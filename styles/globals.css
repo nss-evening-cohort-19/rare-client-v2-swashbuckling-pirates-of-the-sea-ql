@@ -54,3 +54,48 @@ body {
 .avatarButton {
   background-color: black;
 }
+
+/* Reactions (thanks, Justin!) */
+.reactionCounter {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  margin-left: 20px;
+}
+
+.reactionCounter:hover {
+  background-color: white;
+  border-color: black;
+  color: black;
+  cursor: pointer;
+}
+
+.reactionModalContainer {
+  margin-left: 20px;
+}
+
+.reaction-modal {
+  display: flex;
+  flex-direction: row;
+}
+
+.emoji {
+  margin-right: 6px;
+  margin-left: 6px;
+  max-width: 30px;
+  max-height: 30px;
+}
+
+.number {
+  padding: 6px;
+}
+
+.modalEmoji {
+  transition: background-color .4s;
+}
+
+.modalEmoji:hover {
+  background-color: lightblue;
+  cursor: pointer;
+  border-radius: 10%;
+}
