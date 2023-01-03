@@ -8,16 +8,23 @@ import { getCommentsByPost } from '../../utils/data/commentData';
 import PostDetails from '../../components/posts/PostDetails';
 import CategoryFilterButton from '../../components/categories/CategoryFilter';
 import { getCategories } from '../../utils/data/categoryData';
+import ReactionContainer from '../../components/reactions/ReactionContainer';
+import { useAuth } from '../../utils/context/authContext';
+import getReactions from '../../utils/data/reactionData';
 
 export default function ViewSinglePost() {
   const [postDetails, setPostDetails] = useState({});
   const router = useRouter();
   const { postId } = router.query;
   const [comments, setComments] = useState([]);
+  const [reactions, setReactions] = useState([]);
   const [categoryFilter, setCategoryFilter] = useState([]);
+  const { user } = useAuth();
 
   const getAndSetPost = () => {
-    getSinglePost(postId).then(setPostDetails);
+    getSinglePost(postId).then(setPostDetails).then(() => {
+      getReactions().then(setReactions);
+    });
   };
 
   const getAndSetComments = () => {
@@ -42,6 +49,7 @@ export default function ViewSinglePost() {
       <div>
         <PostDetails postObj={postDetails} />
       </div>
+      <ReactionContainer reactions={reactions} postReactions={postDetails.reactionsOnPosts} user={user} postId={postId} onUpdate={getAndSetPost} />
       <div>
         <CommentForm postId={postDetails.id} getAndSetComments={getAndSetComments} />
         {comments?.map((comment) => (

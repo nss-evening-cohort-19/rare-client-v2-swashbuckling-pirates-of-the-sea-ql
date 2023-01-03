@@ -4,8 +4,8 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import { registerUser } from '../utils/auth'; // Update with path to registerUser
-import { updateUser } from '../utils/data/userData';
+import { registerUser } from '../../utils/auth'; // Update with path to registerUser
+import { updateUser } from '../../utils/data/userData';
 
 const initialUserState = {
   firstName: '',
