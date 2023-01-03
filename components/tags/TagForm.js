@@ -20,7 +20,7 @@ function TagForm({ object }) {
   useEffect(() => {
     getTags().then(setTag);
     if (object.id) setFormInput(object);
-  }, [object]);
+  }, [object, setTag]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,15 +37,13 @@ function TagForm({ object }) {
         .then(() => router.push('/tags'));
     } else {
       const payload = { ...formInput };
-      addTag(payload).then(() => {
-        router.push('/tags');
-      });
+      addTag(payload).then(setFormInput(initialState));
     }
   };
   return (
     <Form className="form-floating" onSubmit={handleSubmit}>
       <h2 className="text-black mt-5">{object.id ? 'Update' : 'Create'} a Tag</h2>
-      <FloatingLabel controlId="floatingInput1" label="Label" className="mb-3">
+      <FloatingLabel controlId="floatingInput1" label="Tag" className="mb-3">
         <Form.Control type="text" placeholder="Label" name="label" value={formInput.label} onChange={handleChange} required />
       </FloatingLabel>
       <Button type="submit">{object.id ? 'Update' : 'Create'} Tag</Button>
