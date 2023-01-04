@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Button } from 'react-bootstrap';
+import Button from '@mui/material/Button';
 import React, { useEffect, useState } from 'react';
 import { getSinglePost } from '../../utils/data/postData';
 import CommentForm from '../../components/comments/CommentForm';
@@ -39,13 +39,15 @@ export default function ViewSinglePost() {
   }, [postId]);
 
   return (
-    <div className="d-flex flex-wrap justify-content-between">
-      <Button variant="link" onClick={() => router.push('/')}>
-        All
-      </Button>
-      {categoryFilter?.map((category) => (
-        <CategoryFilterButton key={category.id} catObj={category} />
-      ))}
+    <div className="d-flex flex-wrap justify-content-between flex-column">
+      <div className="categoryFilters">
+        <Button variant="link" onClick={() => router.push('/')}>
+          All
+        </Button>
+        {categoryFilter?.map((category) => (
+          <CategoryFilterButton key={category.id} catObj={category} />
+        ))}
+      </div>
       <div>
         <PostDetails postObj={postDetails} />
       </div>

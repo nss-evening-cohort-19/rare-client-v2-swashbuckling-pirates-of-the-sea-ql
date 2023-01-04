@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import Button from '@mui/material/Button';
 import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
+import { TextField } from '@mui/material';
+import PublishIcon from '@mui/icons-material/Publish';
 import { createPost, updatePost, getSinglePost } from '../../utils/data/postData';
 import { getCategories } from '../../utils/data/categoryData';
 import { getTags } from '../../utils/data/tagData';
@@ -51,27 +54,21 @@ export default function PostForm({ postObj, user }) {
 
   const handleTagChange = (tagId) => {
     if (selectedTags.includes(tagId)) {
-      // remove the postTag from the selectedTags array
       setSelectedTags(selectedTags.filter((tag) => tag !== tagId));
     } else {
-      // add the postTag to the selectedTags array
       setSelectedTags([...selectedTags, tagId]);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (postObj.id) {
-      // First, get the existing postTags for the post
       getTagsByPost(postObj.id).then((existingPostTags) => {
-        // Then, delete any existing postTags that are not in the selectedTags array
         existingPostTags.forEach((existingPostTag) => {
           if (!selectedTags.includes(existingPostTag.tag_id)) {
             deletePostTag(existingPostTag.id);
           }
         });
-        // Finally, create new postTags or do nothing if they already exist
         selectedTags.forEach((tagId) => {
           const existingPostTag = existingPostTags.find((postTag) => postTag.tag_id === tagId);
           if (!existingPostTag) {
@@ -83,13 +80,11 @@ export default function PostForm({ postObj, user }) {
           }
         });
       });
-
       updatePost(user, currentPost, postObj.id).then(() => {
         router.push('/');
       });
     } else {
       createPost(currentPost, user).then((response) => {
-        // For new posts, create the postTags
         selectedTags.forEach((tagId) => {
           const postTag = {
             postId: response.id,
@@ -97,7 +92,6 @@ export default function PostForm({ postObj, user }) {
           };
           createPostTag(postTag);
         });
-
         router.push('/');
       });
     }
@@ -105,21 +99,17 @@ export default function PostForm({ postObj, user }) {
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
+      <Form className="postForm" onSubmit={handleSubmit}>
         <Form.Group className="mb-3">
-          <Form.Label>Title</Form.Label>
-          <Form.Control name="title" required value={currentPost.title} onChange={handleChange} />
+          <TextField fullWidth name="title" label="Title" required value={currentPost.title} onChange={handleChange} />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Content</Form.Label>
-          <textarea className="form-control" rows="5" name="content" required value={currentPost.content} onChange={handleChange} />
+          <TextField multiline label="Content" className="form-control" rows="5" name="content" required value={currentPost.content} onChange={handleChange} />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Image Url</Form.Label>
-          <Form.Control name="imageUrl" required value={currentPost.imageUrl} onChange={handleChange} />
+          <TextField fullWidth label="Image URL" name="imageUrl" required value={currentPost.imageUrl} onChange={handleChange} />
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Category</Form.Label>
           <Form.Select onChange={handleChange} className="mb-3" name="categoryId" value={selectedCategory} required>
             <option value="">Select a Category</option>
             {categories.map((category) => (
@@ -136,7 +126,7 @@ export default function PostForm({ postObj, user }) {
           ))}
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="outlined" type="submit" startIcon={<PublishIcon />}>
           Submit
         </Button>
       </Form>

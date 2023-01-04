@@ -13,7 +13,7 @@ function PostSearch({ posts, setFilteredPosts }) {
   };
 
   return (
-    <Form>
+    <Form className="postSearch">
       <Form.Control type="search" placeholder="Search Posts" value={searchInput} onChange={handleChange} />
     </Form>
   );

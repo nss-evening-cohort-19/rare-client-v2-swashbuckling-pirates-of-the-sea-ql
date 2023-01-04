@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import { useRouter } from 'next/router';
-import { Button } from 'react-bootstrap';
+import Button from '@mui/material/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import PageviewIcon from '@mui/icons-material/Pageview';
 import Link from 'next/link';
 import { useAuth } from '../../utils/context/authContext';
 import { deletePost } from '../../utils/data/postData';
@@ -27,31 +30,22 @@ export default function PostCard({
     <Card>
       <Link passHref href={`users/${userId.id}`}>
         <Card.Header>
-          Posted on: {createdOn} by: {userId?.first_name} {userId?.last_name}
+          Posted on {createdOn} by {userId?.first_name} {userId?.last_name}
         </Card.Header>
       </Link>
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Img src={imageUrl} />
-        <Card.Text>{content}</Card.Text>
-        <Button variant="link" onClick={() => router.push(`../../posts/${id}`)}>
-          VIEW
-        </Button>
-        {userId.id === user.id ? (
-          <>
-            <Button variant="link" onClick={() => router.push(`../../posts/edit/${id}`)}>
-              EDIT
-            </Button>
-            <Button variant="link" onClick={() => deleteThisPost(id)}>
-              DELETE
-            </Button>
-          </>
-        ) : (
-          ''
-        )}
+        <div className="row">
+          <div className="col-6">
+            <Card.Img src={imageUrl} />
+          </div>
+          <div className="col-6">
+            <Card.Text>{content}</Card.Text>
+          </div>
+        </div>
       </Card.Body>
-      <Card.Footer>
-        {categoryId?.label}
+      <Card.Footer className="cardFooter">
+        <b>{categoryId?.label}</b>
         {postTagsArray.length > 0
           ? postTagsArray.map((postTag) => (
             <span key={postTag.id} className="badge text-bg-dark">
@@ -59,6 +53,21 @@ export default function PostCard({
             </span>
           ))
           : ''}
+        <Button variant="link" startIcon={<PageviewIcon />} onClick={() => router.push(`../../posts/${id}`)}>
+          VIEW
+        </Button>
+        {userId.id === user.id ? (
+          <>
+            <Button variant="link" startIcon={<EditIcon />} onClick={() => router.push(`../../posts/edit/${id}`)}>
+              EDIT
+            </Button>
+            <Button variant="link" startIcon={<DeleteIcon />} onClick={() => deleteThisPost(id)}>
+              DELETE
+            </Button>
+          </>
+        ) : (
+          ''
+        )}
       </Card.Footer>
     </Card>
   );
